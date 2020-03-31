@@ -3,9 +3,9 @@ package Project2.ver05;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-
 public class Account extends ConnectDB{
 	
+	Game3by3 game = new Game3by3();
 	public Account() {
 		super();
 	}
@@ -20,7 +20,8 @@ public class Account extends ConnectDB{
 			System.out.println("2.입	금");
 			System.out.println("3.출	금");
 			System.out.println("4.계좌정보출력");
-			System.out.println("5.프로그램종료");
+			System.out.println("5.3by3게임시작");
+			System.out.println("6.프로그램종료");
 			System.out.print("선택: "); 
 			
 			Scanner scan = new Scanner(System.in);
@@ -40,6 +41,9 @@ public class Account extends ConnectDB{
 				break;
 			case MenuChoice.INQUIRE:
 				showAccInfo();
+				break;
+			case MenuChoice.GAME:
+				game.gameMenu();
 				break;
 			case MenuChoice.EXIT:
 				System.out.println("프로그램을 종료합니다.");

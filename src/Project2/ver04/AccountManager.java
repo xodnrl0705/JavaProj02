@@ -25,7 +25,9 @@ public class AccountManager {
 			in.close();
 		}
 		catch (Exception e) {
+			System.out.println("파일을 찾을 수 없습니다.");
 			accounts = new HashSet<Account>();
+			
 			//e.printStackTrace();
 		}
 		

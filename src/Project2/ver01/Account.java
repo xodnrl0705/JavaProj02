@@ -14,10 +14,8 @@ public class Account {
 	
 	
 	public Account(int num) {
-		
 		accounts = new Account[num];
 		numOfAccount = 0;
-		
 	}
 	public Account(String acn, String n, int b) {
 		acNumber = acn;
