@@ -19,6 +19,8 @@ abstract class Account implements Serializable{
 		System.out.println("고객이름: "+ name);
 		System.out.println("잔고: "+ balance);
 	}
+
+	abstract void deposit (int money); 
 	
 	@Override
 	public int hashCode() {
@@ -29,7 +31,7 @@ abstract class Account implements Serializable{
 		//result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		Account ac = (Account)obj;
@@ -42,7 +44,5 @@ abstract class Account implements Serializable{
 		}
 		
 	}
-
-	abstract void deposit (int money); 
 }	
 	

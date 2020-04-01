@@ -5,10 +5,10 @@ import java.util.Scanner;
 
 public class Game3by3 {
 	
-	String left,right,up,down,choice;
+	String left,right,up,down;
 	int xi,xj;
 	Scanner scan = new Scanner(System.in);
-	boolean exit;
+	boolean exit ;
 	
 	String[][] puzzle = {
 
@@ -24,9 +24,32 @@ public class Game3by3 {
 			{"7","8","X"}
 
 	};
-	
 	public Game3by3() {}
 	
+	//게임진행메소드
+	public void gameMenu() { 
+
+		shufflePuzzle();
+		exit = false;
+		while(true) {
+			movePuzzle();
+			if(exit==true) {
+				break;
+			}
+			switch(correctPuzzle()) {
+			case 1://정답이고,재시작일때
+				shufflePuzzle();
+				break;
+			case 2://정답이고, 종료할때
+				return;
+			case 3://안맞을때
+				showPuzzle();
+				break;
+			}
+		}
+	}
+	
+	//퍼즐이 처음과 같은지 알아보는 메소드
 	public int correctPuzzle() {
 		boolean check = Arrays.deepEquals(puzzle, correct);
 		String restart;
@@ -49,30 +72,9 @@ public class Game3by3 {
 		}
 		return 3;
 	}
-		
-	public void gameMenu() {
-
-		shufflePuzzle();
-		while(true) {
-			movePuzzle();
-			if(exit==true) {
-				break;
-			}
-			switch(correctPuzzle()) {
-			case 1://정답이고,재시작일때
-				shufflePuzzle();
-				break;
-			case 2://정답이고, 종료할때
-				return;
-			case 3://안맞을때
-				showPuzzle();
-				break;
-			}
-		}
-	}
 	
+	//퍼즐을 섞는 메소드
 	public void shufflePuzzle() {
-		
 		int shuffleNum = 1;
 		String sub = "";
 		
@@ -112,12 +114,12 @@ public class Game3by3 {
 					shuffleNum++;
 					break;		
 				}
-				
 			}
 			catch (ArrayIndexOutOfBoundsException e) {
 				
 			}
 		}
+		//만약 셔플했는데도 정답과 같으면 다시 셔플
 		boolean check = Arrays.deepEquals(puzzle, correct);
 		if(check==true) {
 			shufflePuzzle();
@@ -127,6 +129,7 @@ public class Game3by3 {
 		}
 	}
 	
+	//현재의 퍼즐의 형태를 보여주는 메소드
 	public void showPuzzle() {
 		System.out.println("===============");
 		for(int i=0; i<puzzle.length;i++) {
@@ -138,6 +141,7 @@ public class Game3by3 {
 		System.out.println("===============");
 	}
 	
+	//퍼즐안에있는 X의 인덱스 번호를 찾는메소드
 	public void findX() {
 		for(int i=0; i<puzzle.length;i++) {
 			for(int j=0; j<puzzle[i].length;j++) {
@@ -149,13 +153,13 @@ public class Game3by3 {
 		}
 	}
 	
+	//퍼즐을 움직이는 메소드
 	public void movePuzzle() {
-		
 		try {
 			System.out.println("[ 이동 ] a:Left d:Right w:Up s:Down");
 			System.out.println("[ 종료 ] x:Exit");
 			System.out.println("키를 입력해주세요 : ");
-			choice = scan.nextLine();
+			String choice = scan.nextLine();
 			String sub= "";
 			
 			switch (choice){
@@ -188,7 +192,7 @@ public class Game3by3 {
 				break;		
 			case "x":
 				System.out.println("게임을 종료합니다.");
-				exit=true;
+				exit = true;
 				break;
 			}
 			

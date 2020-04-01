@@ -9,6 +9,11 @@ import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.Scanner;
 
+class MenuSelectException extends Exception{
+	public MenuSelectException() {
+		super();
+	}
+}
 
 public class AccountManager {
 
@@ -18,9 +23,8 @@ public class AccountManager {
 		
 		try {
 			
-			ObjectInputStream in =
-					new ObjectInputStream(
-							new FileInputStream("src/Project2/ver04/AccountBook.obj"));
+			ObjectInputStream in = new ObjectInputStream(
+				new FileInputStream("src/Project2/ver04/AccountBook.obj"));
 			accounts = (HashSet<Account>)in.readObject();
 			in.close();
 		}
@@ -84,7 +88,7 @@ public class AccountManager {
 			
 		}
 	} 
-	
+	// 덮어쓰기메소드
 	public void overlapInput(boolean a, Account ac) {
 		Scanner scan = new Scanner(System.in);
 		
@@ -95,16 +99,20 @@ public class AccountManager {
 			if(overlap == 0) {
 				accounts.remove(ac);
 				accounts.add(ac);
-				System.out.println("===데이터 입력이 완료되었습니다.===");
+				System.out.println("계좌계설이 완료되었습니다."); 
+				System.out.println();
+			}
+			else if(overlap == 1) {
+				System.out.println("메뉴로 돌아갑니다");
+				System.out.println();
 			}
 		}
 		else {
-			System.out.println("===데이터 입력이 완료되었습니다.===");
+			System.out.println("계좌계설이 완료되었습니다."); 
+			System.out.println();
 		}
 	}
-	
-	
-	// 계좌개설을 위한 함수
+	// 계좌개설을 위한 메소드
 	public void makeAccount() {
 		String aNumber,aName, aGrade;
 		int aBalance, aRate;
@@ -155,10 +163,7 @@ public class AccountManager {
 				boolean a = accounts.add(hac);
 				
 				overlapInput(a, hac);
-				
 			}
-			System.out.println("계좌계설이 완료되었습니다."); 
-			System.out.println();
 		}
 		catch (InputMismatchException e) {
 			System.out.println("문자를 입력하시면 안됩니다.");
@@ -282,8 +287,6 @@ public class AccountManager {
 			withdrawMoney();
 		}
 	}
-		
-
 	// 전체계좌정보출력
 	public void showAccInfo() {
 
@@ -298,7 +301,7 @@ public class AccountManager {
 		System.out.println("전체계좌정보 출력이 완료되었습니다.");
 
 	}
-	
+	// 데이터저장
 	public void saveInfo() {
 		try {
 			
@@ -318,5 +321,4 @@ public class AccountManager {
 		}
 		
 	}
-
 }

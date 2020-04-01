@@ -5,9 +5,11 @@ import java.util.Scanner;
 
 public class Account extends ConnectDB{
 	
-	Game3by3 game = new Game3by3();
+	Game3by3 game;
+	
 	public Account() {
 		super();
+		game = new Game3by3();
 	}
 	
 	// 메뉴출력
@@ -53,13 +55,11 @@ public class Account extends ConnectDB{
 		}
 	}       
 	// 계좌개설을 위한 함수(prepared)
-	
-	
 	public void makeAccount() {
 		
 		try {
 			//1.쿼리문준비
-			String query = "INSERT INTO banking_tb VALUES (?, ?, ?)";
+			String query = "INSERT INTO banking_tb VALUES (SEQ_BANKING.nextval,?, ?, ?)";
 			//2.prepared객체 생성
 			psmt = con.prepareStatement(query);
 			
@@ -147,19 +147,22 @@ public class Account extends ConnectDB{
 	// 전체계좌정보출력
 	public void showAccInfo() {
 		try {
-			stmt = con.createStatement();
 	         
-	        String query = "SELECT * from banking_tb ";
-	        
+			String query = "SELECT * from banking_tb ";
+
+			stmt = con.createStatement();
 	        rs = stmt.executeQuery(query);
 	        
 	        while(rs.next()) {
-	        	String acNumber = rs.getString(1);//employee_id컬럼
-				String name = rs.getString(2);//컬럼명을 그대로 이용함
-				int balance = rs.getInt(3);
+	        	
+	        	int indexNumber = rs.getInt("index_num");
+	        	String acNumber = rs.getString("ac_number");
+				String name = rs.getString("name");
+				int balance = rs.getInt("balance");
 				
-				System.out.printf("%s %s %d%n",
-						acNumber, name, balance);
+				System.out.println("번호\t계좌번호\t이름\t잔고\t");
+				System.out.printf("%d\t%s\t%s\t%d%n",
+						indexNumber,acNumber, name, balance);
 	         }
 	      }
 	      catch (SQLException e) {
@@ -170,5 +173,4 @@ public class Account extends ConnectDB{
 		System.out.println("===전체정보가 출력되었습니다.==");
 		
 	}  
-
 }

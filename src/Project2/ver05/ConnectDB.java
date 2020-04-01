@@ -40,9 +40,7 @@ public abstract class ConnectDB {
 	   }
 	   catch (Exception e) {
 		   System.out.println("알수 없는 예외 발생");
-		   
 	   }
-	   
    }
   
    //자원반납을 위한 메소드
@@ -61,13 +59,14 @@ public abstract class ConnectDB {
          System.out.println("자원 반납 시 오류가 발생하였습니다.");
       }
    }////end of close
-     
+   //계좌생성
    abstract void makeAccount(); 
-	
+   //입금
    abstract void depositMoney(); 
-   
+   //출금
    abstract void withdrawMoney();
-	
+   //계좌정보출력
    abstract void showAccInfo();
-   
 }
+
+
